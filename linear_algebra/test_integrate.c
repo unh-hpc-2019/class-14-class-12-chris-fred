@@ -20,22 +20,21 @@ main(int argc, char **argv)
     double sum = 0.;
     
 
-    for (int i = 0; i<10000; i++){
-    #pragma omp parallel
-        {
-            double local_sum = 0.;
+    
+    
     #pragma omp for
+
   for (int i = 0; i < N; i++) {
     double x0 = i * dx;
     double x1 = (i+1) * dx;
-    local_sum += .5 * (f(x0) + f(x1)) * dx;
+#pragma omp critical
+    
+    sum += .5 * (f(x0) + f(x1)) * dx;
+ 
   }
-    sum += local_sum;
-            
-        }
-    }
+    
         
-  printf("four times the sum = %g\n", 4*sum/10000);
+  printf("four times the sum = %g\n", 4*sum);
     
     
 double tend = Wtime();
