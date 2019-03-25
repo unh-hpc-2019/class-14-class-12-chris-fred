@@ -1,6 +1,8 @@
 
 #include <stdio.h>
 #include <math.h>
+#include <assert.h>
+#include "linear_algebra.h"
 
 static double
 f(double x)
@@ -11,16 +13,34 @@ f(double x)
 int
 main(int argc, char **argv)
 {
-  const int N = 1000;
+  const int N = 10000;
   double dx = 1. / N;
+    
+   double tbeg = Wtime();
+    double sum = 0.;
+    
 
-  double sum = 0.;
+    for (int i = 0; i<10000; i++){
+    #pragma omp parallel
+        {
+            double local_sum = 0.;
+    #pragma omp for
   for (int i = 0; i < N; i++) {
     double x0 = i * dx;
     double x1 = (i+1) * dx;
-    sum += .5 * (f(x0) + f(x1)) * dx;
+    local_sum += .5 * (f(x0) + f(x1)) * dx;
   }
-  printf("sum = %g\n", sum);
-
+    sum += local_sum;
+            
+        }
+    }
+        
+  printf("four times the sum = %g\n", 4*sum/10000);
+    
+    
+double tend = Wtime();
+    
+    
+    printf("It took %g seconds\n", tend-tbeg);
   return 0;
 }
