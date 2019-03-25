@@ -22,17 +22,16 @@ main(int argc, char **argv)
 
     
     
-#pragma omp parallel for
-
-  for (int i = 0; i < N; i++) {
+#pragma omp parallel reduction(+:sum)
+    {
+#pragma omp for
+        for (int i=0; i<N; i++){
     double x0 = i * dx;
     double x1 = (i+1) * dx;
 
-    double val = .5 * (f(x0) + f(x1)) * dx;
- #pragma omp critical
-      sum += val;
-  }
-    
+    sum += .5 * (f(x0) + f(x1)) * dx;
+        }
+    }
         
   printf("four times the sum = %g\n", 4*sum);
     
