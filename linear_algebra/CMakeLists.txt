@@ -4,6 +4,12 @@ cmake_minimum_required (VERSION 3.9)
 project (LinearAlgebra)
 enable_testing()
 
+# If using a pre-released version for development, uncomment:
+set(CMAKE_BUILD_TYPE Debug)
+set(CMAKE_C_FLAGS "-Wall")
+# If using the released version, uncomment:
+# set(CMAKE_BUILD_TYPE Release)
+
 enable_language(Fortran)
 include(FortranCInterface)
 FortranCInterface_HEADER(FC.h MACRO_NAMESPACE "FC_")
@@ -48,4 +54,3 @@ add_test(test_vector_dot test_vector_dot)
 add_test(test_vector_add test_vector_add)
 add_test(test_matrix_vector_mul test_matrix_vector_mul)
 add_test(test_matrix_matrix_mul test_matrix_matrix_mul)
-
