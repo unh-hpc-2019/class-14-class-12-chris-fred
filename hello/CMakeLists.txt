@@ -2,7 +2,11 @@ cmake_minimum_required (VERSION 3.9)
 
 project(Hello)
 
-set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -Wall")
+# If using a pre-released version for development, uncomment:
+set(CMAKE_BUILD_TYPE Debug)
+set(CMAKE_C_FLAGS "-Wall")
+# If using the released version, uncomment:
+# set(CMAKE_BUILD_TYPE Release)
 
 find_package(OpenMP)
 
