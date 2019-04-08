@@ -4,16 +4,15 @@
 int
 main(int argc, char **argv)
 {
-  // single-threaded
-  printf("Hi, just starting.\n");
-  // start running multiple threads
-
-  int thread_id = omp_get_thread_num();
-  int n_threads = omp_get_num_threads();
-#pragma omp parallel
- {
-    printf("Hello %d/%d\n", thread_id, n_threads);
+  int test = -1 ;
+  int thread_id = -1 ;
+  int n_threads = -1 ;
+#pragma omp parallel private(n_threads)
+  {
+    thread_id = omp_get_thread_num();
+    n_threads = omp_get_num_threads();
+    printf("Hello %d/%d test=%d\n", thread_id, n_threads, test);
+    test = thread_id;
   }
-  // back to single-threaded
-  printf("just about done...\n");
+  printf("test = %d\n", test);
 }
