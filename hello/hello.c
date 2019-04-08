@@ -6,7 +6,7 @@
 int
 main(int argc, char **argv)
 {
-  greeting("Kai");
+  greeting("Mr. Wong");
 
-  printf("10 factorial is %d\n", factorial(10));
+  printf("8 factorial is %d\n", factorial(8));
 }
